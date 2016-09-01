@@ -2,6 +2,7 @@
 
 Install
 
+    luarocks install bit32
     luarocks install luacrypto
     luarocks --local install luasec OPENSSL_LIBDIR=/usr/lib/x86_64-linux-gnu
 
