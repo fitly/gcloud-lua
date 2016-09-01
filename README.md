@@ -3,7 +3,9 @@
 Install
 
     luarocks install luacrypto
-    luarocks install luasec
+    luarocks --local install luasec OPENSSL_LIBDIR=/usr/lib/x86_64-linux-gnu
+
+Correct a bug in `~/.luarocks/share/lua/5.1/ssl/https.lua` following this [issue resolution](https://github.com/brunoos/luasec/issues/44)
 
 Get token
 
