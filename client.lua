@@ -1,8 +1,8 @@
 -- as explained in https://developers.google.com/identity/protocols/OAuth2ServiceAccount#creatingjwt
 local cjson = require "cjson"
 local crypto = require("crypto")
-local urlencode = require('lib.urlencode')
-require 'lib.base64'
+local urlencode = require('urlencode')
+require 'base64'
 require("socket")
 local https = require 'ssl.https'
 local ltn12 = require("ltn12")
