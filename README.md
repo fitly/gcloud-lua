@@ -8,7 +8,7 @@
 
 Correct a bug in `~/.luarocks/share/lua/5.1/ssl/https.lua` following this [issue resolution](https://github.com/brunoos/luasec/issues/44)
 
-Create a service account for your application in Gcloud console and download the private key as a `key.json`
+Create a service account for your application in Gcloud console, download the private key as a `key.json` and configure your client :
 
 ```lua
 client = require 'gcloud.client'
