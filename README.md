@@ -8,20 +8,27 @@ Install
 
 Correct a bug in `~/.luarocks/share/lua/5.1/ssl/https.lua` following this [issue resolution](https://github.com/brunoos/luasec/issues/44)
 
-Get token
+Create a service account for your application in Gcloud console and download the private key as a `key.json`
 
-    th main.lua
+```lua
+client = require 'gcloud.client'
+client.from_service_account_json("key.json")
+```
 
-Use token
+Main functions :
 
+**client.upload(local_file_path, bucket, gcloud_file_path)**
 
+Upload a file to gcloud storage
 
-POST https://www.googleapis.com/upload/storage/v1/b/myBucket/o?uploadType=media&name=myObject
+**client.upload_from_string(string, bucket, gcloud_file_path)**
 
-curl -H "Authorization: Bearer <access_token>" -G -d part=snippet --data-urlencode id=9bZkp7q19f0 https://www.googleapis.com/youtube/v3/videos
-curl -H "Authorization: Bearer 1/fFBGRNJru1FQd44AzqT3Zg" https://www.googleapis.com/drive/v2/files
-curl https://www.googleapis.com/drive/v2/files?access_token=1/fFBGRNJru1FQd44AzqT3Zg
+Upload a string content to gcloud storage
 
-GET /storage/v1/b/example-bucket/o HTTP/1.1
-Host: www.googleapis.com
-Authorization: Bearer ya29.AHES6ZRVmB7fkLtd1XTmq6mo0S1wqZZi3-Lh_s-6Uw7p8vtgSwg
+**client.download_as_string(bucket, gcloud_file_path)**
+
+Download a file as a string
+
+**client.download(bucket, gcloud_file_path, local_file_path)**
+
+Download a file and save to disk
