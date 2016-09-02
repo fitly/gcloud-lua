@@ -8,16 +8,18 @@ local https = require 'ssl.https'
 local ltn12 = require("ltn12")
 local upload_url = "https://www.googleapis.com/upload/storage/v1/b/"
 local download_url = "https://www.googleapis.com/download/storage/v1/b/"
+local datastore_url = "https://datastore.clients6.google.com/v1beta3/projects/"
 
 M = {}
+
 
 function M.from_service_account_json (json_file)
   file = io.open(json_file, "r")
   io.input(file)
   value = cjson.decode(io.read("*a"))
 
-  local header = [[{"alg":"RS256","typ":"JWT"}]]
-  local claim_set = [[{"aud":"]] .. value.token_uri .. [[","exp":]] .. (os.time(now)+10) .. [[,"iat":]] .. os.time(now) .. [[,"iss":"]] .. value.client_email .. [[","scope":"https://www.googleapis.com/auth/devstorage.read_write"}]]
+  local header = cjson.encode{alg="RS256",typ="JWT"}
+  local claim_set = cjson.encode{aud=value.token_uri , exp=(os.time()+10), iat= os.time(),iss=value.client_email, scope="https://www.googleapis.com/auth/devstorage.read_write https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/datastore https://www.googleapis.com/auth/datastore"}
   local input_signature = base64.encode(header) .. "." .. base64.encode (claim_set)
   local kpriv = assert(crypto.pkey.from_pem(value.private_key, true))
   local signature = input_signature .. "." .. base64.encode(crypto.sign('sha256', input_signature, kpriv))
@@ -32,6 +34,7 @@ function M.from_service_account_json (json_file)
     M.access_token = results.access_token
     M.expires_in = results.expires_in
   end
+  M.project_id = value.project_id
 end
 
 function M.upload_from_string(s, bucket, dest_filepath)
@@ -99,6 +102,40 @@ function M.download(bucket, filepath, file)
   }
   -- print(body, code, headers, status)
   return code
+end
+
+function M.insert(kind, properties)
+  local url = datastore_url .. M.project_id .. ":commit"
+
+  local t = {}
+  local s = cjson.encode{
+    mode="NON_TRANSACTIONAL",
+    mutations={
+      insert={
+        key={
+          partitionId={namespaceId=""},
+          path={{kind=kind}}
+        },
+        properties=properties
+      }
+    }
+  }
+
+  local body, code, headers, status = https.request{
+    url = url,
+    headers = {
+      ["Authorization"] = "Bearer " .. M.access_token ,
+      ["Content-length"] = #s,
+      ["Content-Type"] =  "multipart/form-data",
+    },
+    method = "POST",
+    source = ltn12.source.string(s),
+    sink = ltn12.sink.table(t)
+  }
+  -- print(body, code, headers, status)
+  -- print(table.concat(t))
+  -- print(cjson.decode(table.concat(t)).mutationResults[1].key.path[1].id)
+  return code, cjson.decode(table.concat(t)).mutationResults[1].key.path[1].id
 end
 
 return M

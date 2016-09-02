@@ -41,3 +41,19 @@ Download a file and save to disk :
 ```lua
 client.download(bucket, gcloud_file_path, local_file_path)
 ```
+
+Insert an entity in the datastore :
+
+```lua
+client.insert(kind, properties)
+```
+
+Example :
+
+```lua
+client.insert("MyEntity", {
+  comment={stringValue="qfdqdsfqsf2",excludeFromIndexes=false},
+  elapsed_time={doubleValue=10,excludeFromIndexes=false},
+  time_stamp={timestampValue=os.date("!%Y-%m-%dT%H:%M:%SZ",os.time()),excludeFromIndexes=false}
+})
+```
