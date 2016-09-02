@@ -1,6 +1,6 @@
 # gcloud-lua
 
-Install
+### Install
 
     luarocks install bit32
     luarocks install luacrypto
@@ -15,20 +15,28 @@ client = require 'gcloud.client'
 client.from_service_account_json("key.json")
 ```
 
-Main functions :
+### Main functions :
 
-**client.upload(local_file_path, bucket, gcloud_file_path)**
+```lua
+client.upload(local_file_path, bucket, gcloud_file_path)
+```
 
 Upload a file to gcloud storage
 
-**client.upload_from_string(string, bucket, gcloud_file_path)**
+```lua
+client.upload_from_string(string, bucket, gcloud_file_path)
+```
 
 Upload a string content to gcloud storage
 
-**client.download_as_string(bucket, gcloud_file_path)**
+```lua
+client.download_as_string(bucket, gcloud_file_path)
+```
 
 Download a file as a string
 
-**client.download(bucket, gcloud_file_path, local_file_path)**
+```lua
+client.download(bucket, gcloud_file_path, local_file_path)
+```
 
 Download a file and save to disk
