@@ -4,6 +4,7 @@ local crypto = require("crypto")
 require 'base64'
 require("socket")
 local https = require 'ssl.https'
+local ltn12 = require("ltn12")
 
 M = {}
 
@@ -23,8 +24,27 @@ function M.from_service_account_json (json_file)
   local s = "grant_type=" .. urlencode.string("urn:ietf:params:oauth:grant-type:jwt-bearer") .. "&assertion=" .. urlencode.string(signature)
 
   local body, code, headers, status = https.request(value.token_uri,s)
-  print(body, code, headers, status)
+  -- print(body, code, headers, status)
+  results = cjson.decode(body)
+  if code == 200 then
+    M.access_token = results.access_token
+    M.expires_in = results.expires_in
+  end
 end
 
+function M.get_blob(file)
+  s = "mlfdjkqs"
+  local body, code, headers, status = https.request{
+    url = "https://www.googleapis.com/upload/storage/v1/b/fitly-test/o?uploadType=media&name=myObject",
+    headers = {
+      ["Authorization"] = "Bearer " .. M.access_token ,
+      ["Content-length"] = #s
+    },
+    method = "POST",
+    source = ltn12.source.string(s) --io.open("waffle.jpg")
+  }
+  print(body, code, headers, status)
+  return "fil"
+end
 
 return M
