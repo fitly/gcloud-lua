@@ -17,26 +17,27 @@ client.from_service_account_json("key.json")
 
 ### Main functions :
 
+Upload a file to gcloud storage:
+
 ```lua
 client.upload(local_file_path, bucket, gcloud_file_path)
 ```
 
-Upload a file to gcloud storage
+Upload a string content to gcloud storage:
 
 ```lua
 client.upload_from_string(string, bucket, gcloud_file_path)
 ```
 
-Upload a string content to gcloud storage
+
+Download a file as a string :
 
 ```lua
 client.download_as_string(bucket, gcloud_file_path)
 ```
 
-Download a file as a string
+Download a file and save to disk :
 
 ```lua
 client.download(bucket, gcloud_file_path, local_file_path)
 ```
-
-Download a file and save to disk
