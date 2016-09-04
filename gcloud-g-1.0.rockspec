@@ -1,5 +1,5 @@
 package = 'gcloud'
-version = 'g-1'
+version = 'g-1.0'
 
 source = {
    url = 'git://github.com/fitly/gcloud-lua',

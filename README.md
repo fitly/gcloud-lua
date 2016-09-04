@@ -9,7 +9,7 @@
 Correct a bug in `~/.luarocks/share/lua/5.1/ssl/https.lua` following this [issue resolution](https://github.com/brunoos/luasec/issues/44)
 
 ```
-> (sudo) luarocks install https://raw.githubusercontent.com/fitly/gcloud-lua/master/gcloud-1.0.rockspec
+> (sudo) luarocks install https://raw.githubusercontent.com/fitly/gcloud-lua/master/gcloud-g-1.0.rockspec
 ```
 
 
