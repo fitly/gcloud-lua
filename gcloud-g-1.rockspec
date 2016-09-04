@@ -14,7 +14,7 @@ description = {
 dependencies = {
    'bit32',
    'luacrypto',
-   'luasec'
+   'luasec  >= 0.6'
 }
 
 build = {

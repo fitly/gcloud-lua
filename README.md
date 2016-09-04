@@ -4,7 +4,7 @@
 
     luarocks install bit32
     luarocks install luacrypto
-    luarocks --local install luasec OPENSSL_LIBDIR=/usr/lib/x86_64-linux-gnu
+    luarocks install luasec OPENSSL_LIBDIR=/usr/lib/x86_64-linux-gnu
 
 Correct a bug in `~/.luarocks/share/lua/5.1/ssl/https.lua` following this [issue resolution](https://github.com/brunoos/luasec/issues/44)
 
