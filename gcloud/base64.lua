@@ -97,7 +97,7 @@ function base64.encode (input)
 	assert(type(input) == "string", "Invalid input, expected type string but got: "..tostring(input).." as a: "..type(input))
 	assert(#input > 0, "Invalid input, cannot encode an empty string.")
 
-	local bytes = { input:byte(i, #input) }
+	local bytes = { input:byte(1, #input) }
 
 	local out = {}
 

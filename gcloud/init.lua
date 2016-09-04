@@ -73,7 +73,9 @@ function M.upload_from_string(s, bucket, dest_filepath)
     method = "POST",
     source = ltn12.source.string(s)
   }
-  -- print(body, code, headers, status)
+  if code ~= 200 then
+    print(body, code, headers, status)
+  end
   return code
 end
 
@@ -94,7 +96,9 @@ function M.upload(filepath, bucket, dest_filepath)
     method = "POST",
     source = ltn12.source.file(io.open(filepath, "rb"))
   }
-  -- print(body, code, headers, status)
+  if code ~= 200 then
+    print(body, code, headers, status)
+  end
   return code
 end
 
@@ -110,7 +114,9 @@ function M.download_as_string(bucket, filepath)
     method = "GET",
     sink = ltn12.sink.table(t)
   }
-  -- print(body, code, headers, status)
+  if code ~= 200 then
+    print(body, code, headers, status)
+  end
   return  table.concat(t)
 end
 
@@ -126,7 +132,9 @@ function M.download(bucket, filepath, file)
     method = "GET",
     sink = ltn12.sink.file(io.open(file, "w"))
   }
-  -- print(body, code, headers, status)
+  if code ~= 200 then
+    print(body, code, headers, status)
+  end
   return code
 end
 
@@ -159,9 +167,10 @@ function M.insert(kind, properties)
     source = ltn12.source.string(s),
     sink = ltn12.sink.table(t)
   }
-  -- print(body, code, headers, status)
-  -- print(table.concat(t))
-  -- print(cjson.decode(table.concat(t)).mutationResults[1].key.path[1].id)
+  if code ~= 200 then
+    print(body, code, headers, status)
+    print(table.concat(t))
+  end
   return code, cjson.decode(table.concat(t)).mutationResults[1].key.path[1].id
 end
 
