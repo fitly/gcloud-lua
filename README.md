@@ -2,16 +2,12 @@
 
 ### Install
 
-    luarocks install bit32
-    luarocks install luacrypto
-    luarocks install luasec OPENSSL_LIBDIR=/usr/lib/x86_64-linux-gnu
-
-Correct a bug in `~/.luarocks/share/lua/5.1/ssl/https.lua` following this [issue resolution](https://github.com/brunoos/luasec/issues/44)
-
 ```
-> (sudo) luarocks install https://raw.githubusercontent.com/fitly/gcloud-lua/master/gcloud-g-1.rockspec
+luarocks install bit32
+luarocks install luacrypto
+luarocks install luasec OPENSSL_LIBDIR=/usr/lib/x86_64-linux-gnu
+luarocks install https://raw.githubusercontent.com/fitly/gcloud-lua/master/gcloud-g-1.rockspec
 ```
-
 
 Create a service account for your application in Gcloud console, download the private key as a `key.json` and configure your client :
 
