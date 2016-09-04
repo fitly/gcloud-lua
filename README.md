@@ -8,10 +8,15 @@
 
 Correct a bug in `~/.luarocks/share/lua/5.1/ssl/https.lua` following this [issue resolution](https://github.com/brunoos/luasec/issues/44)
 
+```
+> (sudo) luarocks install https://raw.githubusercontent.com/fitly/gcloud-lua/master/gcloud-1.0.rockspec
+```
+
+
 Create a service account for your application in Gcloud console, download the private key as a `key.json` and configure your client :
 
 ```lua
-client = require 'client'
+client = require 'gcloud'
 client.from_service_account_json("key.json")
 ```
 
